@@ -8,7 +8,16 @@ const doc = {
     title: 'WhatsApp API',
     description: 'API Wrapper for WhatsAppWebJS'
   },
-  host: '',
+  servers: [
+    {
+      url: '',
+      description: ''
+    },
+    {
+      url: 'http://localhost:3000',
+      description: 'localhost'
+    }
+  ],
   securityDefinitions: {
     apiKeyAuth: {
       type: 'apiKey',
@@ -40,6 +49,10 @@ const doc = {
       success: true,
       state: 'CONNECTED',
       message: 'session_connected'
+    },
+    RestartSessionResponse: {
+      success: true,
+      message: 'Restarted successfully'
     },
     TerminateSessionResponse: {
       success: true,

@@ -1,5 +1,6 @@
 const { Client, LocalAuth } = require('whatsapp-web.js')
 const fs = require('fs')
+const path = require('path')
 const sessions = new Map()
 const { baseWebhookURL, sessionFolderPath, maxAttachmentSize, setMessagesAsSeen, webVersion, webVersionCacheType, recoverSessions } = require('./config')
 const { triggerWebhook, waitForNestedObject, checkIfEventisEnabled } = require('./utils')
@@ -21,15 +22,22 @@ const validateSession = async (sessionId) => {
       .catch((err) => { return { success: false, state: null, message: err.message } })
 
     // Wait for client.pupPage to be evaluable
+    let maxRetry = 0
     while (true) {
       try {
         if (client.pupPage.isClosed()) {
           return { success: false, state: null, message: 'browser tab closed' }
         }
-        await client.pupPage.evaluate('1'); break
+        await Promise.race([
+          client.pupPage.evaluate('1'),
+          new Promise(resolve => setTimeout(resolve, 1000))
+        ])
+        break
       } catch (error) {
-        // Ignore error and wait for a bit before trying again
-        await new Promise(resolve => setTimeout(resolve, 100))
+        if (maxRetry === 2) {
+          return { success: false, state: null, message: 'session closed' }
+        }
+        maxRetry++
       }
     }
 
@@ -140,7 +148,7 @@ const initializeEvents = (client, sessionId) => {
     waitForNestedObject(client, 'pupPage').then(() => {
       const restartSession = async (sessionId) => {
         sessions.delete(sessionId)
-        await client.destroy().catch(e => {})
+        await client.destroy().catch(e => { })
         setupSession(sessionId)
       }
       client.pupPage.once('close', function () {
@@ -153,7 +161,7 @@ const initializeEvents = (client, sessionId) => {
         console.log(`Error occurred on browser page for ${sessionId}. Restoring`)
         restartSession(sessionId)
       })
-    }).catch(e => {})
+    }).catch(e => { })
   }
 
   checkIfEventisEnabled('auth_failure')
@@ -276,10 +284,33 @@ const initializeEvents = (client, sessionId) => {
       })
     })
 
+  checkIfEventisEnabled('message_edit')
+    .then(_ => {
+      client.on('message_edit', (message, newBody, prevBody) => {
+        triggerWebhook(sessionWebhook, sessionId, 'message_edit', { message, newBody, prevBody })
+      })
+    })
+
+  checkIfEventisEnabled('message_ciphertext')
+    .then(_ => {
+      client.on('message_ciphertext', (message) => {
+        triggerWebhook(sessionWebhook, sessionId, 'message_ciphertext', { message })
+      })
+    })
+
   checkIfEventisEnabled('message_revoke_everyone')
     .then(_ => {
-      client.on('message_revoke_everyone', async (after, before) => {
-        triggerWebhook(sessionWebhook, sessionId, 'message_revoke_everyone', { after, before })
+      // eslint-disable-next-line camelcase
+      client.on('message_revoke_everyone', async (message) => {
+        // eslint-disable-next-line camelcase
+        triggerWebhook(sessionWebhook, sessionId, 'message_revoke_everyone', { message })
+      })
+    })
+
+  checkIfEventisEnabled('message_revoke_me')
+    .then(_ => {
+      client.on('message_revoke_me', async (message) => {
+        triggerWebhook(sessionWebhook, sessionId, 'message_revoke_me', { message })
       })
     })
 
@@ -305,26 +336,80 @@ const initializeEvents = (client, sessionId) => {
         triggerWebhook(sessionWebhook, sessionId, 'contact_changed', { message, oldId, newId, isContact })
       })
     })
+
+  checkIfEventisEnabled('chat_removed')
+    .then(_ => {
+      client.on('chat_removed', async (chat) => {
+        triggerWebhook(sessionWebhook, sessionId, 'chat_removed', { chat })
+      })
+    })
+
+  checkIfEventisEnabled('chat_archived')
+    .then(_ => {
+      client.on('chat_archived', async (chat, currState, prevState) => {
+        triggerWebhook(sessionWebhook, sessionId, 'chat_archived', { chat, currState, prevState })
+      })
+    })
+
+  checkIfEventisEnabled('unread_count')
+    .then(_ => {
+      client.on('unread_count', async (chat) => {
+        triggerWebhook(sessionWebhook, sessionId, 'unread_count', { chat })
+      })
+    })
 }
 
-// Function to check if folder is writeable
+// Function to delete client session folder
 const deleteSessionFolder = async (sessionId) => {
   try {
-    const targetDirPath = `${sessionFolderPath}/session-${sessionId}/`
+    const targetDirPath = path.join(sessionFolderPath, `session-${sessionId}`)
     const resolvedTargetDirPath = await fs.promises.realpath(targetDirPath)
     const resolvedSessionPath = await fs.promises.realpath(sessionFolderPath)
-    // Check if the target directory path is a subdirectory of the sessions folder path
-    if (!resolvedTargetDirPath.startsWith(resolvedSessionPath)) {
-      throw new Error('Invalid path')
+
+    // Ensure the target directory path ends with a path separator
+    const safeSessionPath = `${resolvedSessionPath}${path.sep}`
+
+    // Validate the resolved target directory path is a subdirectory of the session folder path
+    if (!resolvedTargetDirPath.startsWith(safeSessionPath)) {
+      throw new Error('Invalid path: Directory traversal detected')
     }
-    await fs.promises.rm(targetDirPath, { recursive: true, force: true })
+    await fs.promises.rm(resolvedTargetDirPath, { recursive: true, force: true })
   } catch (error) {
     console.log('Folder deletion error', error)
     throw error
   }
 }
 
-// Function to delete client session
+// Function to reload client session without removing browser cache
+const reloadSession = async (sessionId) => {
+  try {
+    const client = sessions.get(sessionId)
+    if (!client) {
+      return
+    }
+    client.pupPage.removeAllListeners('close')
+    client.pupPage.removeAllListeners('error')
+    try {
+      const pages = await client.pupBrowser.pages()
+      await Promise.all(pages.map((page) => page.close()))
+      await Promise.race([
+        client.pupBrowser.close(),
+        new Promise(resolve => setTimeout(resolve, 5000))
+      ])
+    } catch (e) {
+      const childProcess = client.pupBrowser.process()
+      if (childProcess) {
+        childProcess.kill(9)
+      }
+    }
+    sessions.delete(sessionId)
+    setupSession(sessionId)
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+}
+
 const deleteSession = async (sessionId, validation) => {
   try {
     const client = sessions.get(sessionId)
@@ -342,10 +427,11 @@ const deleteSession = async (sessionId, validation) => {
       console.log(`Destroying session ${sessionId}`)
       await client.destroy()
     }
-
-    // Wait for client.pupBrowser to be disconnected before deleting the folder
-    while (client.pupBrowser.isConnected()) {
-      await new Promise(resolve => setTimeout(resolve, 100))
+    // Wait 10 secs for client.pupBrowser to be disconnected before deleting the folder
+    let maxDelay = 0
+    while (client.pupBrowser.isConnected() && (maxDelay < 10)) {
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      maxDelay++
     }
     await deleteSessionFolder(sessionId)
     sessions.delete(sessionId)
@@ -364,7 +450,7 @@ const flushSessions = async (deleteOnlyInactive) => {
     for (const file of files) {
       // Use regular expression to extract the string from the folder name
       const match = file.match(/^session-(.+)$/)
-      if (match && match[1]) {
+      if (match) {
         const sessionId = match[1]
         const validation = await validateSession(sessionId)
         if (!deleteOnlyInactive || !validation.success) {
@@ -384,5 +470,6 @@ module.exports = {
   restoreSessions,
   validateSession,
   deleteSession,
+  reloadSession,
   flushSessions
 }

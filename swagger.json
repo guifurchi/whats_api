@@ -5,7 +5,16 @@
     "description": "API Wrapper for WhatsAppWebJS",
     "version": "1.0.0"
   },
-  "host": "",
+  "servers": [
+    {
+      "url": "",
+      "description": ""
+    },
+    {
+      "url": "http://localhost:3000",
+      "description": "localhost"
+    }
+  ],
   "tags": [
     {
       "name": "Session",
@@ -27,7 +36,6 @@
           "Various"
         ],
         "description": "",
-        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
@@ -88,7 +96,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -156,7 +164,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -224,7 +232,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -285,7 +293,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -293,6 +301,74 @@
             "description": "QR image.",
             "content": {
               "image/png": {}
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/session/restart/{sessionId}": {
+      "get": {
+        "tags": [
+          "Session"
+        ],
+        "summary": "Restart session",
+        "description": "Restarts the session with the given session ID.",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Unique identifier for the session (alphanumeric and - allowed)",
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sessions restarted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestartSessionResponse"
+                }
+              }
             }
           },
           "403": {
@@ -349,7 +425,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -408,7 +484,6 @@
         ],
         "summary": "Terminate inactive sessions",
         "description": "Terminates all inactive sessions.",
-        "parameters": [],
         "responses": {
           "200": {
             "description": "Sessions terminated.",
@@ -455,7 +530,6 @@
         ],
         "summary": "Terminate all sessions",
         "description": "Terminates all sessions.",
-        "parameters": [],
         "responses": {
           "200": {
             "description": "Sessions terminated.",
@@ -510,7 +584,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -570,7 +644,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -659,7 +733,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -748,7 +822,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -808,7 +882,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -868,7 +942,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -957,7 +1031,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -1046,7 +1120,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -1106,7 +1180,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -1195,7 +1269,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -1284,7 +1358,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -1373,7 +1447,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -1433,7 +1507,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -1522,7 +1596,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -1611,7 +1685,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -1656,6 +1730,105 @@
         ]
       }
     },
+    "/client/addOrRemoveLabels/{sessionId}": {
+      "post": {
+        "tags": [
+          "Client"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Unique identifier for the session (alphanumeric and - allowed)",
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "labelIds": {
+                    "type": "array",
+                    "description": "Array of label IDs",
+                    "example": []
+                  },
+                  "chatIds": {
+                    "type": "array",
+                    "description": "Array of chat IDs",
+                    "example": []
+                  }
+                }
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "labelIds": {
+                    "type": "array",
+                    "description": "Array of label IDs",
+                    "example": []
+                  },
+                  "chatIds": {
+                    "type": "array",
+                    "description": "Array of chat IDs",
+                    "example": []
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/client/getNumberId/{sessionId}": {
       "post": {
         "tags": [
@@ -1671,7 +1844,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -1724,7 +1897,7 @@
                   "number": {
                     "type": "string",
                     "description": "The number or ID ('@c.us' will be automatically appended if not specified)",
-                    "example": "5515998566622"
+                    "example": "6281288888888"
                   }
                 }
               }
@@ -1736,7 +1909,7 @@
                   "number": {
                     "type": "string",
                     "description": "The number or ID ('@c.us' will be automatically appended if not specified)",
-                    "example": "5515998566622"
+                    "example": "6281288888888"
                   }
                 }
               }
@@ -1760,7 +1933,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -1813,7 +1986,7 @@
                   "number": {
                     "type": "string",
                     "description": "The number or ID ('@c.us' will be automatically appended if not specified)",
-                    "example": "5515998566622"
+                    "example": "6281288888888"
                   }
                 }
               }
@@ -1825,7 +1998,7 @@
                   "number": {
                     "type": "string",
                     "description": "The number or ID ('@c.us' will be automatically appended if not specified)",
-                    "example": "5515998566622"
+                    "example": "6281288888888"
                   }
                 }
               }
@@ -1849,7 +2022,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -1902,7 +2075,7 @@
                   "contactId": {
                     "type": "string",
                     "description": "The contact ID's of profile",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -1914,7 +2087,7 @@
                   "contactId": {
                     "type": "string",
                     "description": "The contact ID's of profile",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -1938,7 +2111,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -1988,7 +2161,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -2077,7 +2250,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -2176,7 +2349,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -2265,7 +2438,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -2364,7 +2537,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -2435,14 +2608,14 @@
               "examples": {
                 "string": {
                   "value": {
-                    "chatId": "5515998566622@c.us",
+                    "chatId": "6281288888888@c.us",
                     "contentType": "string",
-                    "content": "Seja bem vindo a Comunidade ZDG!"
+                    "content": "Hello World!"
                   }
                 },
                 "MessageMedia": {
                   "value": {
-                    "chatId": "5515998566622@c.us",
+                    "chatId": "6281288888888@c.us",
                     "contentType": "MessageMedia",
                     "content": {
                       "mimetype": "image/jpeg",
@@ -2453,14 +2626,14 @@
                 },
                 "MessageMediaFromURL": {
                   "value": {
-                    "chatId": "5515998566622@c.us",
+                    "chatId": "6281288888888@c.us",
                     "contentType": "MessageMediaFromURL",
                     "content": "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Example"
                   }
                 },
                 "Location": {
                   "value": {
-                    "chatId": "5515998566622@c.us",
+                    "chatId": "6281288888888@c.us",
                     "contentType": "Location",
                     "content": {
                       "latitude": -6.2,
@@ -2471,27 +2644,27 @@
                 },
                 "Buttons": {
                   "value": {
-                    "chatId": "5515998566622@c.us",
+                    "chatId": "6281288888888@c.us",
                     "contentType": "Buttons",
                     "content": {
-                      "body": "Seja bem vindo a Comunidade ZDG!",
+                      "body": "Hello World!",
                       "buttons": [
                         {
                           "body": "button 1"
                         }
                       ],
-                      "title": "Seja bem vindo a Comunidade ZDG!",
-                      "footer": "Seja bem vindo a Comunidade ZDG!"
+                      "title": "Hello World!",
+                      "footer": "Hello World!"
                     }
                   }
                 },
                 "List": {
                   "value": {
-                    "chatId": "5515998566622@c.us",
+                    "chatId": "6281288888888@c.us",
                     "contentType": "List",
                     "content": {
-                      "body": "Seja bem vindo a Comunidade ZDG!",
-                      "buttonText": "Seja bem vindo a Comunidade ZDG!",
+                      "body": "Hello World!",
+                      "buttonText": "Hello World!",
                       "sections": [
                         {
                           "title": "sectionTitle",
@@ -2507,14 +2680,14 @@
                           ]
                         }
                       ],
-                      "title": "Seja bem vindo a Comunidade ZDG!",
-                      "footer": "Seja bem vindo a Comunidade ZDG!"
+                      "title": "Hello World!",
+                      "footer": "Hello World!"
                     }
                   }
                 },
                 "Contact": {
                   "value": {
-                    "chatId": "5515998566622@c.us",
+                    "chatId": "6281288888888@c.us",
                     "contentType": "Contact",
                     "content": {
                       "contactId": "6281288888889@c.us"
@@ -2523,7 +2696,7 @@
                 },
                 "Poll": {
                   "value": {
-                    "chatId": "5515998566622@c.us",
+                    "chatId": "6281288888888@c.us",
                     "contentType": "Poll",
                     "content": {
                       "pollName": "Cats or Dogs?",
@@ -2558,7 +2731,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -2618,7 +2791,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -2678,7 +2851,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -2767,7 +2940,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -2856,7 +3029,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -2955,7 +3128,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -3044,7 +3217,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -3133,7 +3306,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -3222,7 +3395,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -3311,7 +3484,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -3371,7 +3544,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -3424,7 +3597,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -3436,7 +3609,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -3460,7 +3633,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -3513,7 +3686,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -3525,7 +3698,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -3549,7 +3722,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -3602,7 +3775,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -3614,7 +3787,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -3638,7 +3811,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -3691,7 +3864,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -3703,7 +3876,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -3727,7 +3900,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -3780,7 +3953,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "searchOptions": {
                     "type": "object",
@@ -3797,7 +3970,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "searchOptions": {
                     "type": "object",
@@ -3826,7 +3999,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -3879,7 +4052,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -3891,7 +4064,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -3915,7 +4088,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -3968,7 +4141,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -3980,7 +4153,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4004,7 +4177,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -4057,7 +4230,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4069,7 +4242,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4093,7 +4266,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -4146,7 +4319,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4158,7 +4331,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4182,7 +4355,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -4235,7 +4408,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4247,7 +4420,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4271,7 +4444,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -4324,7 +4497,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4336,7 +4509,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4360,7 +4533,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -4413,7 +4586,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4425,7 +4598,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4449,7 +4622,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -4502,7 +4675,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4514,7 +4687,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4538,7 +4711,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -4591,7 +4764,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4603,7 +4776,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4627,7 +4800,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -4680,7 +4853,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4692,7 +4865,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4716,7 +4889,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -4769,7 +4942,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4781,7 +4954,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4805,7 +4978,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -4858,7 +5031,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4870,7 +5043,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4894,7 +5067,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -4947,7 +5120,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4959,7 +5132,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -4983,7 +5156,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -5036,7 +5209,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -5048,7 +5221,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -5072,7 +5245,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -5125,7 +5298,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -5137,7 +5310,185 @@
                   "chatId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/groupChat/setPicture/{sessionId}": {
+      "post": {
+        "tags": [
+          "Group Chat"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Unique identifier for the session (alphanumeric and - allowed)",
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "chatId": {
+                    "type": "string",
+                    "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
+                    "example": "6281288888888@c.us"
+                  }
+                }
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "chatId": {
+                    "type": "string",
+                    "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
+                    "example": "6281288888888@c.us"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/groupChat/deletePicture/{sessionId}": {
+      "post": {
+        "tags": [
+          "Group Chat"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Unique identifier for the session (alphanumeric and - allowed)",
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "chatId": {
+                    "type": "string",
+                    "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
+                    "example": "6281288888888@c.us"
+                  }
+                }
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "chatId": {
+                    "type": "string",
+                    "description": "Unique whatsApp identifier for the given Chat (either group or personnal)",
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -5161,7 +5512,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -5214,7 +5565,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -5231,7 +5582,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -5260,7 +5611,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -5313,7 +5664,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -5330,7 +5681,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -5359,7 +5710,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -5412,7 +5763,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -5429,7 +5780,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -5458,7 +5809,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -5511,7 +5862,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -5528,7 +5879,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -5557,7 +5908,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -5610,7 +5961,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -5627,7 +5978,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -5656,7 +6007,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -5709,7 +6060,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -5726,7 +6077,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -5755,7 +6106,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -5808,7 +6159,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -5825,7 +6176,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -5854,7 +6205,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -5907,7 +6258,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -5924,7 +6275,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -5953,7 +6304,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -6006,7 +6357,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -6023,7 +6374,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -6052,7 +6403,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -6105,7 +6456,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -6122,7 +6473,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -6151,7 +6502,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -6204,7 +6555,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -6221,7 +6572,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -6250,7 +6601,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -6303,7 +6654,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -6320,7 +6671,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -6349,7 +6700,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -6402,7 +6753,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -6419,7 +6770,7 @@
                   "chatId": {
                     "type": "string",
                     "description": "The Chat id which contains the message",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   },
                   "messageId": {
                     "type": "string",
@@ -6448,7 +6799,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -6501,7 +6852,7 @@
                   "contactId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the contact",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -6513,7 +6864,7 @@
                   "contactId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the contact",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -6537,7 +6888,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -6590,7 +6941,7 @@
                   "contactId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the contact",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -6602,7 +6953,7 @@
                   "contactId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the contact",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -6626,7 +6977,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -6679,7 +7030,7 @@
                   "contactId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the contact",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -6691,7 +7042,7 @@
                   "contactId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the contact",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -6715,7 +7066,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -6768,7 +7119,7 @@
                   "contactId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the contact",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -6780,7 +7131,7 @@
                   "contactId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the contact",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -6804,7 +7155,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -6857,7 +7208,7 @@
                   "contactId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the contact",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -6869,7 +7220,7 @@
                   "contactId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the contact",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -6893,7 +7244,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -6946,7 +7297,7 @@
                   "contactId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the contact",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -6958,7 +7309,7 @@
                   "contactId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the contact",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -6982,7 +7333,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -7035,7 +7386,7 @@
                   "contactId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the contact",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -7047,7 +7398,7 @@
                   "contactId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the contact",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -7071,7 +7422,7 @@
               "type": "string"
             },
             "description": "Unique identifier for the session (alphanumeric and - allowed)",
-            "example": "comunidadezdg"
+            "example": "f8377d8d-a589-4242-9ba6-9486a04ef80c"
           }
         ],
         "responses": {
@@ -7124,7 +7475,7 @@
                   "contactId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the contact",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -7136,7 +7487,7 @@
                   "contactId": {
                     "type": "string",
                     "description": "Unique whatsApp identifier for the contact",
-                    "example": "5515998566622@c.us"
+                    "example": "6281288888888@c.us"
                   }
                 }
               }
@@ -7182,6 +7533,22 @@
         },
         "xml": {
           "name": "StatusSessionResponse"
+        }
+      },
+      "RestartSessionResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Restarted successfully"
+          }
+        },
+        "xml": {
+          "name": "RestartSessionResponse"
         }
       },
       "TerminateSessionResponse": {

@@ -1,5 +1,5 @@
 # Use the official Node.js Alpine image as the base image
-FROM node:14-alpine
+FROM node:20-alpine
 
 # Set the working directory
 WORKDIR /usr/src/app
@@ -14,8 +14,8 @@ RUN set -x \
     && apk add --no-cache \
     udev \
     ttf-freefont \
-    chromium
-
+    chromium 
+RUN install cors
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
