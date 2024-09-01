@@ -15,6 +15,7 @@ RUN set -x \
     udev \
     ttf-freefont \
     chromium
+RUN install cors
 
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
