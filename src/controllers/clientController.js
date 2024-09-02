@@ -73,11 +73,9 @@ const sendMessage = async (req, res) => {
     let messageOut
     switch (contentType) {
       case 'string':
-        if (options?.media) {
+        if (options && options.media) {
           const media = options.media
-          media.filename = null
-          media.filesize = null
-          options.media = new MessageMedia(media.mimetype, media.data, media.filename, media.filesize)
+          options.media = new MessageMedia(media.mimetype, media.data, media.filename = null, media.filesize = null)
         }
         messageOut = await client.sendMessage(chatId, content, options)
         break
@@ -107,8 +105,7 @@ const sendMessage = async (req, res) => {
         break
       }
       case 'Contact': {
-        const contactId = content.contactId.endsWith('@c.us') ? content.contactId : `${content.contactId}@c.us`
-        const contact = await client.getContactById(contactId)
+        const contact = await client.getContactById(typeof content.contactId === 'number' ? content.contactId + '@c.us' : content.contactId)
         messageOut = await client.sendMessage(chatId, contact, options)
         break
       }
@@ -773,46 +770,6 @@ const getLabels = async (req, res) => {
 }
 
 /**
- * Adds or removes labels to/from chats.
- * @async
- * @function
- * @param {Object} req - the request object
- * @param {Object} res - the response object
- * @return {Promise} a Promise that resolves to the JSON response with success status and labels
- * @throws {Error} if an error occurs
- */
-const addOrRemoveLabels = async (req, res) => {
-  /*
-  #swagger.requestBody = {
-    required: true,
-    schema: {
-      type: 'object',
-      properties: {
-        labelIds: {
-          type: 'array',
-          description: 'Array of label IDs',
-          example: []
-        },
-        chatIds: {
-          type: 'array',
-          description: 'Array of chat IDs',
-          example: []
-        },
-      }
-    },
-  }
-*/
-  try {
-    const { labelIds, chatIds } = req.body
-    const client = sessions.get(req.params.sessionId)
-    const labels = await client.addOrRemoveLabels(labelIds, chatIds)
-    res.json({ success: true, labels })
-  } catch (error) {
-    sendErrorResponse(res, 500, error.message)
-  }
-}
-
-/**
  * Retrieves the state for a particular session.
  * @async
  * @function
@@ -1243,26 +1200,26 @@ const unpinChat = async (req, res) => {
  */
 
 const setProfilePicture = async (req, res) => {
-  /*
-    #swagger.requestBody = {
-      required: true,
-      schema: {
-        type: "object",
-        properties: {
-          pictureMimetype: {
-            type: "string",
-            description: "The mimetype of the picture to set as the profile picture for the user WhatsApp account.",
-            example: "image/png"
-          },
-          pictureData: {
-            type: "string",
-            description: "The base64 data of the picture to set as the profile picture for the user WhatsApp account.",
-            example: "iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII="
-          }
+/*
+  #swagger.requestBody = {
+    required: true,
+    schema: {
+      type: "object",
+      properties: {
+        pictureMimetype: {
+          type: "string",
+          description: "The mimetype of the picture to set as the profile picture for the user WhatsApp account.",
+          example: "image/png"
+        },
+        pictureData: {
+          type: "string",
+          description: "The base64 data of the picture to set as the profile picture for the user WhatsApp account.",
+          example: "iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII="
         }
       }
     }
-  */
+  }
+*/
 
   try {
     const { pictureMimetype, pictureData } = req.body
@@ -1291,7 +1248,6 @@ module.exports = {
   getInviteInfo,
   getLabelById,
   getLabels,
-  addOrRemoveLabels,
   isRegisteredUser,
   getNumberId,
   getProfilePictureUrl,

@@ -3,8 +3,6 @@ node_modules
 
 # Ignore dotenv files
 .env
-# for cpanel or shared hosting purpose
-.htaccess
 
 # Ignore sessions
 sessions

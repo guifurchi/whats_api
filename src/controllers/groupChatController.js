@@ -1,4 +1,3 @@
-const { MessageMedia } = require('whatsapp-web.js')
 const { sessions } = require('../sessions')
 const { sendErrorResponse } = require('../utils')
 
@@ -290,53 +289,6 @@ const setMessagesAdminsOnly = async (req, res) => {
   }
 }
 
-/**
- * Set the group Picture
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @param {Object} req.body.pictureMimetype - The mimetype of the image.
- * @param {Object} req.body.pictureData - The new group picture in base64 format.
- * @param {Object} req.body.chatId - ID of the group chat.
- * @param {string} req.params.sessionId - The ID of the session for the user.
- * @returns {Object} Returns a JSON object with a success status and the result of the function.
- * @throws {Error} If there is an issue setting the group picture, an error will be thrown.
- */
-const setPicture = async (req, res) => {
-  try {
-    const { pictureMimetype, pictureData, chatId } = req.body
-    const client = sessions.get(req.params.sessionId)
-    const media = new MessageMedia(pictureMimetype, pictureData)
-    const chat = await client.getChatById(chatId)
-    if (!chat.isGroup) { throw new Error('The chat is not a group') }
-    const result = await chat.setPicture(media)
-    res.json({ success: true, result })
-  } catch (error) {
-    sendErrorResponse(res, 500, error.message)
-  }
-}
-
-/**
- * Delete the group Picture
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @param {Object} req.body.chatId - ID of the group chat.
- * @param {string} req.params.sessionId - The ID of the session for the user.
- * @returns {Object} Returns a JSON object with a success status and the result of the function.
- * @throws {Error} If there is an issue setting the group picture, an error will be thrown.
- */
-const deletePicture = async (req, res) => {
-  try {
-    const { chatId } = req.body
-    const client = sessions.get(req.params.sessionId)
-    const chat = await client.getChatById(chatId)
-    if (!chat.isGroup) { throw new Error('The chat is not a group') }
-    const result = await chat.deletePicture()
-    res.json({ success: true, result })
-  } catch (error) {
-    sendErrorResponse(res, 500, error.message)
-  }
-}
-
 module.exports = {
   getClassInfo,
   addParticipants,
@@ -349,7 +301,5 @@ module.exports = {
   setDescription,
   setInfoAdminsOnly,
   setMessagesAdminsOnly,
-  setSubject,
-  setPicture,
-  deletePicture
+  setSubject
 }
