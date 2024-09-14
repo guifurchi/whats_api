@@ -40,7 +40,7 @@ COPY certs/fullchain.pem /etc/ssl/certs/fullchain.pem
 COPY certs/privkey.pem /etc/ssl/private/privkey.pem
 
 # Expose ports for Nginx
-EXPOSE 80 443
+EXPOSE 8080 8443
 
 # Final Stage
 FROM nginx:alpine
