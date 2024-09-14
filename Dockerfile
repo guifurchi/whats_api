@@ -1,5 +1,5 @@
 # Use the official Node.js Alpine image as the base image
-FROM node:20-alpine
+FROM node:20-alpine as app
 
 # Set the working directory
 WORKDIR /usr/src/app
@@ -30,3 +30,29 @@ EXPOSE 3000
 
 # Start the API
 CMD ["npm", "start"]
+
+# Nginx Stage
+FROM nginx:alpine as nginx
+
+# Copy Nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY seu_certificado.crt /etc/ssl/certs/
+COPY sua_chave.key /etc/ssl/private/
+
+# Expose ports for Nginx
+EXPOSE 80 443
+
+# Final Stage
+FROM nginx:alpine
+
+# Copy Node.js app from the previous stage
+COPY --from=app /usr/src/app /usr/src/app
+
+# Copy Nginx configuration and SSL certificates
+COPY --from=nginx /etc/nginx /etc/nginx
+
+# Set the working directory for the Node.js app
+WORKDIR /usr/src/app
+
+# Start Nginx and the Node.js app
+CMD ["nginx", "-g", "daemon off;"]
