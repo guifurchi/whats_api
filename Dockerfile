@@ -35,9 +35,9 @@ CMD ["npm", "start"]
 FROM nginx:alpine as nginx
 
 # Copy Nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY seu_certificado.crt /etc/ssl/certs/
-COPY sua_chave.key /etc/ssl/private/
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY certs/fullchain.pem /etc/ssl/certs/fullchain.pem
+COPY certs/privkey.pem /etc/ssl/private/privkey.pem
 
 # Expose ports for Nginx
 EXPOSE 80 443
