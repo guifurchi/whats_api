@@ -7,7 +7,7 @@ services:
     image: chrishubert/whatsapp-web-api:latest # Pull the image from Docker Hub
     restart: always
     ports:
-      - "3000:3000"
+      - "5000:5000"
     environment:
       - API_KEY=digiclinicapp  # OPTIONAL
       - BASE_WEBHOOK_URL=https://whats.digibroad.com.br/localCallbackExample
